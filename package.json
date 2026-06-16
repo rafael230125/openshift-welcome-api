@@ -1,0 +1,24 @@
+{
+  "name": "openshift-welcome-api",
+  "version": "1.0.0",
+  "description": "API de mensagem de boas-vindas para deploy no Red Hat OpenShift",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "deploy": "powershell -ExecutionPolicy Bypass -File scripts/deploy-all.ps1"
+  },
+  "keywords": [
+    "openshift",
+    "docker",
+    "express",
+    "nodejs"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

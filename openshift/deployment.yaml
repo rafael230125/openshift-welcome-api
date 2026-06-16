@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: welcome-api
+  labels:
+    app: welcome-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: welcome-api
+  template:
+    metadata:
+      labels:
+        app: welcome-api
+    spec:
+      containers:
+        - name: welcome-api
+          image: docker.io/SEU_USUARIO/openshift-welcome-api:1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "3000"
+            - name: APP_ENVIRONMENT
+              value: "OpenShift"
+            - name: NODE_ENV
+              value: "production"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
